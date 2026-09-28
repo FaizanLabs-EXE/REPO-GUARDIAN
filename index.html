@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080b14">
+  <meta name="description" content="RepoGuardian — browser-only GitHub repository intelligence, dependency risk and secret-pattern radar.">
+  <title>RepoGuardian — GitHub Intelligence Radar</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="noise"></div>
+
+<header class="topbar">
+  <a class="brand" href="#">
+    <span class="brand-mark">◈</span>
+    <span><b>Repo</b>Guardian <em>RADAR</em></span>
+  </a>
+  <div class="top-actions">
+    <span class="status"><i></i> Browser-only engine</span>
+    <button id="themeBtn" class="icon-btn" title="Toggle contrast">◐</button>
+    <a class="github-btn" href="https://github.com/" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow">GITHUB REPOSITORY INTELLIGENCE</div>
+    <h1>See what a repository is <span>really made of.</span></h1>
+    <p class="hero-copy">Paste a public GitHub repository. RepoGuardian maps its structure, dependency exposure, security signals, activity, documentation and supply-chain clues directly in your browser.</p>
+
+    <form id="scanForm" class="scanbox">
+      <span class="scan-icon">⌕</span>
+      <input id="repoInput" autocomplete="off" placeholder="https://github.com/owner/repository" value="">
+      <button id="scanBtn" type="submit"><span>Analyze repository</span><b>→</b></button>
+    </form>
+    <div class="quick">
+      <span>Try:</span>
+      <button data-repo="https://github.com/withastro/astro">withastro/astro</button>
+      <button data-repo="https://github.com/ruff/ruff">astral-sh/ruff</button>
+      <button data-repo="https://github.com/PostHog/posthog">PostHog/posthog</button>
+    </div>
+    <div id="error" class="error hidden"></div>
+  </section>
+
+  <section id="loading" class="loading hidden">
+    <div class="loader"></div>
+    <div><b id="loadingTitle">Scanning repository…</b><small id="loadingText">Fetching public GitHub metadata</small></div>
+  </section>
+
+  <section id="dashboard" class="dashboard hidden">
+    <div class="repo-head panel">
+      <div>
+        <div class="crumb" id="repoFullName">—</div>
+        <h2 id="repoName">Repository</h2>
+        <p id="repoDesc">—</p>
+        <div class="chips" id="repoChips"></div>
+      </div>
+      <div class="head-actions">
+        <a id="openRepo" target="_blank" rel="noopener" class="secondary">Open GitHub ↗</a>
+        <button id="exportBtn" class="primary">Export report</button>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <article class="metric panel"><span>Repository health</span><strong id="healthScore">—</strong><small id="healthLabel">Waiting</small></article>
+      <article class="metric panel"><span>Stars</span><strong id="stars">—</strong><small id="forks">— forks</small></article>
+      <article class="metric panel"><span>Open issues</span><strong id="issues">—</strong><small>GitHub issues</small></article>
+      <article class="metric panel"><span>Last push</span><strong id="lastPush">—</strong><small id="lastPushRaw">—</small></article>
+    </div>
+
+    <div class="two-col">
+      <article class="panel section">
+        <div class="section-head"><div><span class="kicker">SECURITY RADAR</span><h3>Signals worth checking</h3></div><span id="securityBadge" class="badge">—</span></div>
+        <div id="securityList" class="signal-list"></div>
+      </article>
+      <article class="panel section">
+        <div class="section-head"><div><span class="kicker">DEPENDENCY RADAR</span><h3>Manifest & vulnerability view</h3></div><span id="depBadge" class="badge">—</span></div>
+        <div id="dependencyList" class="signal-list"></div>
+      </article>
+    </div>
+
+    <div class="two-col">
+      <article class="panel section">
+        <div class="section-head"><div><span class="kicker">PROJECT PROFILE</span><h3>Repository facts</h3></div></div>
+        <div id="facts" class="facts"></div>
+      </article>
+      <article class="panel section">
+        <div class="section-head"><div><span class="kicker">DOCUMENTATION</span><h3>README intelligence</h3></div><span id="readmeBadge" class="badge">—</span></div>
+        <div id="readmeBox" class="readme"></div>
+      </article>
+    </div>
+
+    <article class="panel section">
+      <div class="section-head"><div><span class="kicker">CODEBASE MAP</span><h3>Top-level structure</h3></div><span id="treeCount" class="muted">—</span></div>
+      <div id="tree" class="tree"></div>
+    </article>
+
+    <article class="panel section">
+      <div class="section-head"><div><span class="kicker">LIVE API TRACE</span><h3>Data sources used</h3></div></div>
+      <div id="apiTrace" class="api-trace"></div>
+    </article>
+
+    <footer class="signature">╰─➤ ⚡ <b>BUILT BY FAIZAN™</b> · RepoGuardian</footer>
+  </section>
+</main>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
